@@ -1,6 +1,6 @@
 {
   "name": "storycap",
-  "version": "4.0.0-fork2",
+  "version": "4.0.0-fork3",
   "description": "A Storybook addon, Save the screenshot image of your stories! via puppeteer.",
   "engines": {
     "node": ">=14.13"
