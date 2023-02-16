@@ -1,6 +1,6 @@
 {
-  "name": "storycap",
-  "version": "4.0.0",
+  "name": "storycap-ayroblu",
+  "version": "4.0.0-fork1",
   "description": "A Storybook addon, Save the screenshot image of your stories! via puppeteer.",
   "engines": {
     "node": ">=14.13"
@@ -25,7 +25,7 @@
     "storycap": "lib/node/cli.js"
   },
   "scripts": {
-    "clean": "rimraf lib lib-esm \"*.tsbuildinfo\"",
+    "clean": "rimraf lib lib-esm *.tsbuildinfo",
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "tsc --p tsconfig.build.cjs.json",
     "build:esm": "tsc --p tsconfig.build.esm.json",

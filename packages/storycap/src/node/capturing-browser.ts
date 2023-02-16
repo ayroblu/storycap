@@ -414,11 +414,20 @@ export class CapturingBrowser extends StoryPreviewBrowser {
     await this.page.evaluate(() => new Promise(res => (window as any).requestIdleCallback(res, { timeout: 3000 })));
 
     // Get PNG image buffer
-    const rawBuffer = await this.page.screenshot({
-      fullPage: emittedScreenshotOptions.fullPage,
-      omitBackground: emittedScreenshotOptions.omitBackground,
-      captureBeyondViewport: emittedScreenshotOptions.captureBeyondViewport,
-    });
+    let rawBuffer;
+    try {
+      rawBuffer = await this.page.screenshot({
+        fullPage: emittedScreenshotOptions.fullPage,
+        omitBackground: emittedScreenshotOptions.omitBackground,
+        captureBeyondViewport: emittedScreenshotOptions.captureBeyondViewport,
+      });
+    } catch (err) {
+      if (this.currentStoryRetryCount < this.opt.captureMaxRetryCount) {
+        this.logger.warn(`screenshot error: ${err}`);
+        return { buffer: null, succeeded: false, variantKeysToPush: [], defaultVariantSuffix: '' };
+      }
+      throw err;
+    }
 
     let buffer: Buffer | null = null;
     if (Buffer.isBuffer(rawBuffer)) {
