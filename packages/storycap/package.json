@@ -1,5 +1,5 @@
 {
-  "name": "storycap-ayroblu",
+  "name": "storycap",
   "version": "4.0.0-fork2",
   "description": "A Storybook addon, Save the screenshot image of your stories! via puppeteer.",
   "engines": {
@@ -89,7 +89,7 @@
     "puppeteer-core": "^9.0.0",
     "rimraf": "^4.0.0",
     "sanitize-filename": "^1.6.3",
-    "storycrawler-ayroblu": "4.0.0-fork0",
+    "storycrawler": "4.0.0-fork0",
     "yargs": "^16.0.0"
   },
   "jest": {

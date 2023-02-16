@@ -1,5 +1,5 @@
 {
-  "name": "storycrawler-ayroblu",
+  "name": "storycrawler",
   "version": "4.0.0-fork0",
   "description": "Utilities to build Storybook crawling tools with Puppeteer",
   "engines": {
