@@ -70,7 +70,12 @@ export function createScreenshotService({
     ({ rid, story, variantKey, count }, { push }) =>
       async worker => {
         // Delegate the request to the worker.
-        const [result, elapsedTime] = await time(worker.screenshot(rid, story, variantKey, count));
+        const [result, elapsedTime] = await time(
+          worker.screenshot(rid, story, variantKey, count).catch(err => {
+            logger.warn(`screenshot error: ${err}`);
+            return { buffer: null, succeeded: false, variantKeysToPush: [], defaultVariantSuffix: '' };
+          }),
+        );
 
         const { succeeded, buffer, variantKeysToPush, defaultVariantSuffix } = result;
 
