@@ -86,8 +86,9 @@ export class StoriesBrowser extends BaseBrowser {
       const { __STORYBOOK_CLIENT_API__: api } = window as ExposedWindow;
       api.storyStore && api.storyStore.cacheAllCSFFiles();
     });
+    const isAll = this.opt.all ?? false;
     const result = await this.page.evaluate(
-      () =>
+      isAll =>
         new Promise<{ stories: Story[] | null; timeout: boolean }>(res => {
           const getStories = (count = 0) => {
             const MAX_CONFIGURE_WAIT_COUNT = 4_000;
@@ -107,7 +108,7 @@ export class StoriesBrowser extends BaseBrowser {
                 return;
               }
               // for Storybook v5
-              const stories = this.opt.all
+              const stories = isAll
                 ? Object.values(api.storyStore?.getStoriesJsonData().stories ?? {}).map(
                     ({ id, kind, name: story }) => ({ id, kind, story, version: 'v5' } as Story),
                   )
@@ -117,6 +118,7 @@ export class StoriesBrowser extends BaseBrowser {
           };
           getStories();
         }),
+      isAll,
     );
     if (result.timeout) {
       throw new StoriesTimeoutError();
