@@ -12,6 +12,23 @@ interface API {
     // available SB v6.4 or later
     cacheAllCSFFiles: () => Promise<void>;
     cachedCSFFiles?: Record<string, unknown>;
+    getStoriesJsonData: () => {
+      stories: {
+        [key: string]: {
+          id: string;
+          kind: string;
+          name: string;
+          story: string;
+          importPath: string;
+          title: string;
+          parameters: {
+            docsOnly: boolean;
+            fileName: string;
+            framework: string;
+          };
+        };
+      };
+    };
   };
   raw?: () => { id: string; kind: string; name: string }[]; // available SB v5 or later
 }
@@ -89,7 +106,11 @@ export class StoriesBrowser extends BaseBrowser {
                 return;
               }
               // for Storybook v5
-              const stories = api.raw().map(_ => ({ id: _.id, kind: _.kind, story: _.name, version: 'v5' } as Story));
+              const stories = this.opt.all
+                ? Object.values(api.storyStore?.getStoriesJsonData().stories ?? {}).map(
+                    ({ id, kind, name: story }) => ({ id, kind, story, version: 'v5' } as Story),
+                  )
+                : api.raw().map(_ => ({ id: _.id, kind: _.kind, story: _.name, version: 'v5' } as Story));
               res({ stories, timeout: false });
             }
           };

@@ -47,4 +47,5 @@ export interface MainOptions extends BaseBrowserOptions {
   chromiumPath: string;
   launchOptions: LaunchOptions;
   logger: Logger;
+  all: boolean;
 }

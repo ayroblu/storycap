@@ -86,6 +86,11 @@ function createOptions(): MainOptions {
       default: '',
       description: 'Executable Chromium path.',
     })
+    .option('all', {
+      boolean: true,
+      default: false,
+      description: 'Whether to use new stories index that has stories.',
+    })
     .option('puppeteerLaunchConfig', {
       string: true,
       default: '{ "args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"] }',
@@ -128,6 +133,7 @@ function createOptions(): MainOptions {
     listDevices,
     chromiumChannel,
     chromiumPath,
+    all,
     puppeteerLaunchConfig: puppeteerLaunchConfigString,
   } = setting.argv;
 
@@ -181,6 +187,7 @@ function createOptions(): MainOptions {
     disableWaitAssets,
     chromiumChannel: chromiumChannel as ChromeChannel,
     chromiumPath,
+    all,
     launchOptions: puppeteerLaunchConfig,
     logger,
   } as MainOptions;

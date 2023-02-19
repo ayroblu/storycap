@@ -35,6 +35,8 @@ export interface BaseBrowserOptions {
    *
    **/
   chromiumPath?: string;
+
+  all?: boolean;
 }
 
 /**
